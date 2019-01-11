@@ -1,7 +1,7 @@
 <template lang="pug">
   article.relative
     transition(name="article")
-      router-view(:article="articles[$route.params.slug]")
+      router-view(:article="articles[$route.params.slug]", @close="$router.push({name: 'home'})")
     .relative(:style="{transition: 'transform 800ms', transform: $route.name === 'article' ? 'translateX(-5%)' : ''}")
       section#home__intro.relative.w-full.flex.items-center.px-8.md-px-16.py-32
         .w-full.max-w-5xl.mx-auto.pr-20.md-pr-36

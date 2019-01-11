@@ -1,7 +1,7 @@
 @custom-media --bkpt-sm (min-width: 541px);
 @custom-media --bkpt-md (min-width: 768px);
-@custom-media --bkpt-lg (min-width: 992px);
-@custom-media --bkpt-xl (min-width: 1200px);
+@custom-media --bkpt-lg (min-width: 1024px);
+@custom-media --bkpt-xl (min-width: 1280px);
 
 :root{
   

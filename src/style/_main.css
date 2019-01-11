@@ -63,7 +63,12 @@
  */
  /* hide with accessibility */
  /*.bg-gradient-1{background:linear-gradient(to right, #f8fafc 85%, #b8c2cc);}*/
- .bg-gradient-1{background:linear-gradient(to right, #fcfbf8 85%, #b8c2cc);}
+ .bg-gradient-1{
+    background:linear-gradient(to right, #fcfbf8 90%, #b8c2cc);
+    @media (--bkpt-sm) {
+      background:linear-gradient(to right, #fcfbf8 85%, #b8c2cc);
+    }
+  }
  .style-hide{
   position: absolute!important;
   height: 1px;

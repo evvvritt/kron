@@ -420,21 +420,21 @@ module.exports = {
 
   width: {
     'auto': 'auto',
-    'px': '1px',
-    '1': '0.25rem',
-    '2': '0.5rem',
-    '3': '0.75rem',
-    '4': '1rem',
-    '5': '1.25rem',
-    '6': '1.5rem',
-    '8': '2rem',
-    '10': '2.5rem',
-    '12': '3rem',
-    '16': '4rem',
-    '24': '6rem',
-    '32': '8rem',
-    '48': '12rem',
-    '64': '16rem',
+    // 'px': '1px',
+    // '1': '0.25rem',
+    // '2': '0.5rem',
+    // '3': '0.75rem',
+    // '4': '1rem',
+    // '5': '1.25rem',
+    // '6': '1.5rem',
+    // '8': '2rem',
+    // '10': '2.5rem',
+    // '12': '3rem',
+    // '16': '4rem',
+    // '24': '6rem',
+    // '32': '8rem',
+    // '48': '12rem',
+    // '64': '16rem',
     '1x2': '50%',
     '1x3': '33.33333%',
     '2x3': '66.66667%',
@@ -617,7 +617,8 @@ module.exports = {
     '44': '16rem',
     // '20vh': '20vh',
     '15vh': '15vh',
-    '25vh': '25vh'
+    '25vh': '25vh',
+    '25vmin': '25vmin'
   },
 
   /*
@@ -870,7 +871,7 @@ module.exports = {
     verticalAlign: false,
     visibility: false,
     whitespace: false,
-    width: [],
+    width: ['responsive'],
     zIndex: []
   },
 

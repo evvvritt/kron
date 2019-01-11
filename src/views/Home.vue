@@ -6,7 +6,7 @@
       section#home__intro.relative.w-full.flex.items-center.px-8.md-px-16.py-32
         .w-full.max-w-5xl.mx-auto.pr-20.md-pr-36
           h1.style-hide Cat Kron
-          p.text-xl.md-text-2xl.leading-tight.text-grey-darkest.md-pb-15vh(style="max-width:30em") Cat Kron is a writer and editor based between Los Angeles and New York. Her work has appeared in <i>Artforum</i>, <i>Art Review</i>, <i>Artsy</i>, <i>Apricota</i>, <i>Bookforum</i>, <i>Bomb</i>, <i>Kunstkritikk</i>, and <i>Modern Painters</i>.
+          p.text-lg.sm-text-xl.md-text-2xl.leading-tight.text-grey-darkest.md-pb-15vh(style="max-width:30em") Cat Kron is a writer and editor based between Los Angeles and New York. Her work has appeared in <i>Artforum</i>, <i>Art Review</i>, <i>Artsy</i>, <i>Apricota</i>, <i>Bookforum</i>, <i>Bomb</i>, <i>Kunstkritikk</i>, and <i>Modern Painters</i>.
         //- nav.absolute.w-full.pin-l.pin-b.flex.items-center.px-8.md-px-16
           ul.w-full.max-w-5xl.mx-auto.list-reset.tex-lg
             li.inline-block.mr-8

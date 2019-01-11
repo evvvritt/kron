@@ -1,5 +1,5 @@
 <template lang="pug">
-  #app.font-serif.text-grey-darkest
+  #app.font-serif.text-grey-darkest.leading-normal
     router-view
 </template>
 

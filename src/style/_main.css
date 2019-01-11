@@ -1,7 +1,7 @@
 /** 
  * CSS Variables
- * Import here if using @custom-media-query in tailwind,
- * so postcss-preset-env will rewrite them
+ * Import here if using variables or @custom-media-query in tailwind,
+ * so postcss-preset-env will polyfill them.
 **/
 @import './_settings';
 

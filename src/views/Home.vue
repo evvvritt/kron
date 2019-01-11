@@ -13,45 +13,73 @@
               a.cursor-pointer.hover-text-orange-dark.trans-color-fast CV
             li.inline-block.mr-8
               a.cursor-pointer.hover-text-orange-dark.trans-color-fast Contact
-      nav.sticky.pin-t.pin-l.w-screen.flex.items-center.px-8.h-32.bg-gradient-1.border-b.border-grey-light
-        ul.w-full.max-w-5xl.mx-auto.list-reset.tex-lg
-          li.inline-block.mr-8
-            a.cursor-pointer.hover-text-orange-dark.trans-color-fast Essays
-          li.inline-block.mr-8
-            a.cursor-pointer.hover-text-orange-dark.trans-color-fast Selected Reviews
-          li.inline-block.mr-8
-            a.cursor-pointer.hover-text-orange-dark.trans-color-fast Features
-          li.inline-block.mr-8
-            a.cursor-pointer.hover-text-orange-dark.trans-color-fast Interviews
-          li.inline-block.mr-8
-            a.cursor-pointer.hover-text-orange-dark.trans-color-fast Arts + Culture
-          li.inline-block.mr-8
-            a.cursor-pointer.hover-text-orange-dark.trans-color-fast Place
+      nav.sticky.pin-t.pin-l.w-screen.flex.items-center.pl-8.pr-32.min-h-32.py-6.bg-gradient-1.border-b.border-grey-light
+        ul.w-full.max-w-5xl.mx-auto.list-reset.text-base.leading-normal
+          li.inline-block.mr-10
+            a.cursor-pointer Essays
+          li.inline-block.mr-10
+            a.cursor-pointer Selected Reviews
+          li.inline-block.mr-10
+            a.cursor-pointer Features
+          li.inline-block.mr-10
+            a.cursor-pointer Interviews
+          li.inline-block.mr-10
+            a.cursor-pointer Arts + Culture
+          li.inline-block.mr-10
+            a.cursor-pointer Place
+          li.inline-block.mr-10
+            a.cursor-pointer.opacity-33 Contact
+          li.inline-block.mr-10
+            a.cursor-pointer.opacity-33 CV
       section
-        article.border-b.border-grey-light.px-8(v-for="(article, index) in articles", :key="index")
-          router-link(:to="{name: 'article', params: {slug: index}}")
-            header.max-w-5xl.mx-auto.py-12.leading-tight
-              h2.text-2xl.mb-2 {{article.title}}
-              h6.inline-block.text-sm.mr-4 <i>{{article.source}}</i><span class="inline-block mx-4">&middot;</span><span class="small-caps">{{article.date}}</span>
+        section(v-for="(typ, i) in types")
+          h2.border-b.border-grey-light.px-8.text-md.flex.items-center.justify-center(v-if="i > -1", style="height:14em")
+            span.block.py-16.w-full.max-w-5xl.mx-auto.small-caps(style="letter-spacing:0.2em") {{typ.label}}
+          article.border-b.border-grey-light.px-8(v-for="(article, index) in articles.filter(a => a.cat === typ.id)", :key="index")
+            router-link(:to="{name: 'article', params: {slug: index}}")
+              header.max-w-5xl.mx-auto.py-12.leading-tight
+                h2.text-2xl.mb-2 {{article.title}}
+                h6.inline-block.text-sm.mr-4 <i>{{article.source}}</i><span class="inline-block mx-4">&middot;</span><span class="small-caps">{{article.date}}</span>
+      footer(style="height:66vh;min-height:414px")
+        section.max-w-5xl.mx-auto
     //- scrim
     transition(name="scrim")
       .absolute.pin.bg-black.opacity-50(v-show="$route.name !== 'home'")
 </template>
 
 <script>
-const newArticle = (title, source, date, type = 'article') => { return { title: title, source: source, date: date, type: type } }
+const newArticle = (cat = 'essay', title, source, date, type = 'article') => { return { title: title, source: source, date: date, type: type, cat: cat } }
 export default {
   name: 'home',
   data () {
     return {
+      types: [
+        { id: 'essay', label: 'Essays' },
+        { id: 'reviews', label: 'Selected Reviews' },
+        { id: 'features', label: 'Features' }
+      ],
       articles: [
-        newArticle('Leigh Ruple', 'Page Gallery', 'March 2018'),
-        newArticle('Under the Paving Stones: Dispatch from Pittsburg', 'Art Review', 'Winter 2019'),
-        newArticle('Raúl de Nieves', 'Art Review', 'Winter 2019'),
-        newArticle('Orhan Pamuk', 'Bookforum', 'Winter 2019'),
-        newArticle('Salmon Creek Farm and Flexible Utopias', 'Apricota', 'Winter 2019'),
-        newArticle('Suellen Rocca: Drawings', 'Matthew Marks Gallery', 'Fall 2018'),
-        newArticle('Nancy Holt: Sun Tunnels', 'Artsy', 'September 2018')
+        newArticle('essay', 'Leigh Ruple', 'Page Gallery', 'March 2018'),
+        newArticle('essay', 'Under the Paving Stones: Dispatch from Pittsburg', 'Art Review', 'Winter 2019'),
+        newArticle('essay', 'Raúl de Nieves', 'Art Review', 'Winter 2019'),
+        newArticle('essay', 'Orhan Pamuk', 'Bookforum', 'Winter 2019'),
+        newArticle('essay', 'Salmon Creek Farm and Flexible Utopias', 'Apricota', 'Winter 2019'),
+        newArticle('essay', 'Suellen Rocca: Drawings', 'Matthew Marks Gallery', 'Fall 2018'),
+        newArticle('essay', 'Nancy Holt: Sun Tunnels', 'Artsy', 'September 2018'),
+        newArticle('reviews', 'Leigh Ruple', 'Page Gallery', 'March 2018'),
+        newArticle('reviews', 'Under the Paving Stones: Dispatch from Pittsburg', 'Art Review', 'Winter 2019'),
+        newArticle('reviews', 'Raúl de Nieves', 'Art Review', 'Winter 2019'),
+        newArticle('reviews', 'Orhan Pamuk', 'Bookforum', 'Winter 2019'),
+        newArticle('reviews', 'Salmon Creek Farm and Flexible Utopias', 'Apricota', 'Winter 2019'),
+        newArticle('reviews', 'Suellen Rocca: Drawings', 'Matthew Marks Gallery', 'Fall 2018'),
+        newArticle('reviews', 'Nancy Holt: Sun Tunnels', 'Artsy', 'September 2018'),
+        newArticle('features', 'Leigh Ruple', 'Page Gallery', 'March 2018'),
+        newArticle('features', 'Under the Paving Stones: Dispatch from Pittsburg', 'Art Review', 'Winter 2019'),
+        newArticle('features', 'Raúl de Nieves', 'Art Review', 'Winter 2019'),
+        newArticle('features', 'Orhan Pamuk', 'Bookforum', 'Winter 2019'),
+        newArticle('features', 'Salmon Creek Farm and Flexible Utopias', 'Apricota', 'Winter 2019'),
+        newArticle('features', 'Suellen Rocca: Drawings', 'Matthew Marks Gallery', 'Fall 2018'),
+        newArticle('features', 'Nancy Holt: Sun Tunnels', 'Artsy', 'September 2018')
       ]
     }
   }

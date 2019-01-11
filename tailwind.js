@@ -51,32 +51,32 @@ let colors = {
   'grey': '#b8c2cc',
   'grey-light': '#dae1e7',
   'grey-lighter': '#f1f5f8',
-  'grey-lightest': '#f8fafc',
-  'white': '#ffffff',
+  'grey-lightest': '#fcfbf8', // default: '#f8fafc',
+  'white': '#ffffff'
 
-  'red-darkest': '#3b0d0c',
-  'red-darker': '#621b18',
-  'red-dark': '#cc1f1a',
-  'red': '#e3342f',
-  'red-light': '#ef5753',
-  'red-lighter': '#f9acaa',
-  'red-lightest': '#fcebea',
+  // 'red-darkest': '#3b0d0c',
+  // 'red-darker': '#621b18',
+  // 'red-dark': '#cc1f1a',
+  // 'red': '#e3342f',
+  // 'red-light': '#ef5753',
+  // 'red-lighter': '#f9acaa',
+  // 'red-lightest': '#fcebea',
 
-  'orange-darkest': '#462a16',
-  'orange-darker': '#613b1f',
-  'orange-dark': '#de751f',
-  'orange': '#f6993f',
-  'orange-light': '#faad63',
-  'orange-lighter': '#fcd9b6',
-  'orange-lightest': '#fff5eb',
+  // 'orange-darkest': '#462a16',
+  // 'orange-darker': '#613b1f',
+  // 'orange-dark': '#de751f',
+  // 'orange': '#f6993f',
+  // 'orange-light': '#faad63',
+  // 'orange-lighter': '#fcd9b6',
+  // 'orange-lightest': '#fff5eb',
 
-  'pink-darkest': '#451225',
-  'pink-darker': '#6f213f',
-  'pink-dark': '#eb5286',
-  'pink': '#f66d9b',
-  'pink-light': '#fa7ea8',
-  'pink-lighter': '#ffbbca',
-  'pink-lightest': '#ffebef'
+  // 'pink-darkest': '#451225',
+  // 'pink-darker': '#6f213f',
+  // 'pink-dark': '#eb5286',
+  // 'pink': '#f66d9b',
+  // 'pink-light': '#fa7ea8',
+  // 'pink-lighter': '#ffbbca',
+  // 'pink-lightest': '#ffebef',
 }
 
 module.exports = {
@@ -203,6 +203,7 @@ module.exports = {
     'xs': '.75em',
     'sm': '.875em',
     'base': '1em',
+    'md': '1.125em',
     'lg': '1.125em',
     'xl': '1.25em',
     '2xl': '1.5em',
@@ -484,6 +485,7 @@ module.exports = {
     '64': '16rem',
     'full': '100%',
     'screen': '100vh',
+    '25vh': '25vh',
     '50vh': '50vh'
   },
 
@@ -524,6 +526,7 @@ module.exports = {
 
   minHeight: {
     '0': '0',
+    '32': '8rem',
     'full': '100%',
     'screen': '100vh'
   },
@@ -609,7 +612,10 @@ module.exports = {
     '20': '5rem',
     '24': '6rem',
     '32': '8rem',
+    // '36': '10rem',
+    '40': '12rem',
     // '20vh': '20vh',
+    '15vh': '15vh',
     '25vh': '25vh'
   },
 
@@ -750,6 +756,7 @@ module.exports = {
   opacity: {
     '0': '0',
     '25': '.25',
+    '33': '.33',
     '50': '.5',
     '75': '.75',
     '100': '1'

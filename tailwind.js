@@ -116,10 +116,10 @@ module.exports = {
   */
 
   screens: {
-    'sm': '541px',
-    'md': '768px',
-    'lg': '992px',
-    'xl': '1200px'
+    'sm': { raw: '(--bkpt-sm)' }, // '541px',
+    'md': { raw: '(--bkpt-md)' }, // --bkpt-md', // '768px',
+    'lg': { raw: '(--bkpt-lg)' }, // '992px',
+    'xl': { raw: '(--bkpt-xl)' } // '1200px'
   },
 
   /*
@@ -852,7 +852,7 @@ module.exports = {
     opacity: [],
     outline: ['focus'],
     overflow: [],
-    padding: [],
+    padding: ['responsive'],
     pointerEvents: false,
     position: [],
     resize: false,

@@ -1,3 +1,10 @@
+/** 
+ * CSS Variables
+ * Import here if using @custom-media-query in tailwind,
+ * so postcss-preset-env will rewrite them
+**/
+@import './_settings';
+
 /**
  * This injects Tailwind's base styles, which is a combination of
  * Normalize.css and some additional base styles.

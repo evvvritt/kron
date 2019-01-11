@@ -2,7 +2,7 @@
   article.relative
     transition(name="article")
       router-view(:article="articles[$route.params.slug]")
-    .relative(:style="{transition: 'transform 800ms', transform: $route.name === 'article' ? 'translateX(-5%)' : ''}")
+    #home__intro.relative(:style="{transition: 'transform 800ms', transform: $route.name === 'article' ? 'translateX(-5%)' : ''}")
       section.relative.w-full.flex.items-center.px-8(style="height:calc(100vh - 8rem);")
         .w-full.max-w-5xl.mx-auto
           h1.style-hide Cat Kron
@@ -13,7 +13,7 @@
               a.cursor-pointer.hover-text-orange-dark.trans-color-fast CV
             li.inline-block.mr-8
               a.cursor-pointer.hover-text-orange-dark.trans-color-fast Contact
-      nav.sticky.pin-t.pin-l.w-screen.flex.items-center.pl-8.pr-32.min-h-32.py-6.bg-gradient-1.border-b.border-grey-light
+      nav.sticky.pin-t.pin-l.w-screen.flex.items-center.px-8.min-h-32.py-6.bg-gradient-1.border-b.border-grey-light
         ul.w-full.max-w-5xl.mx-auto.list-reset.text-base.leading-normal
           li.inline-block.mr-10
             a.cursor-pointer Essays
@@ -87,6 +87,12 @@ export default {
 </script>
 
 <style>
+/*@import '../style/_settings.css';*/
+@media (--bkpt-md) {
+  #home__intro{
+    background: red
+  }
+}
 .article-enter-active,
 .article-leave-active{transition: all 800ms;}
 .article-enter,

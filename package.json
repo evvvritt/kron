@@ -45,10 +45,10 @@
   "postcss": {
     "plugins": {
       "postcss-import": {},
+      "tailwindcss": "./tailwind.js",
       "postcss-preset-env": {
         "stage": 0
       },
-      "tailwindcss": "./tailwind.js",
       "autoprefixer": {}
     }
   },

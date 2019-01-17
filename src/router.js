@@ -14,12 +14,16 @@ export default new Router({
       component: Home,
       children: [
         {
-          path: '/:slug',
+          path: '/articles/:uid',
           name: 'article',
           props: true,
           component: () => import(/* webpackChunkName: "about" */ './views/Article.vue')
         }
       ]
+    },
+    {
+      path: '/articles',
+      redirect: '/'
     }
   ]
 })

@@ -390,11 +390,11 @@ module.exports = {
   */
 
   borderRadius: {
-    'none': '0',
-    'sm': '.125rem',
-    default: '.25rem',
-    'lg': '.5rem',
-    'full': '9999px'
+    // 'none': '0',
+    // 'sm': '.125rem',
+    default: '.3rem'
+    // 'lg': '.5rem',
+    // 'full': '9999px'
   },
 
   /*
@@ -830,8 +830,8 @@ module.exports = {
     backgroundRepeat: false,
     backgroundSize: false,
     borderCollapse: false,
-    borderColors: [],
-    borderRadius: false,
+    borderColors: ['hover'],
+    borderRadius: [],
     borderStyle: false,
     borderWidths: [],
     cursor: [],

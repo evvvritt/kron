@@ -3,27 +3,24 @@
     transition(name="article")
       router-view(@close="$router.push({name: 'home'})")
     .relative(:style="{transition: 'transform 800ms', transform: $route.name === 'article' ? 'translateX(-5%)' : ''}")
+      //- intro
       section#home__intro.relative.w-full.flex.items-center.px-8.md-px-16.py-32
         .w-full.max-w-5xl.mx-auto.pr-20.md-pr-36
           h1.style-hide Cat Kron
           .md-pb-15vh(v-if="doc.about")
             .relative
+              //- about
               prismic-rich-text.text-lg.sm-text-xl.md-text-2xl.leading-tight.text-grey-darkest(:field="doc.about", style="max-width:30em")
               //- contact btn
               .absolute.pin-l.top-100.mt-12
-                a(:href="'mailto:' + doc.contact", target="_blank", rel="nofollow").inline-block.text-sm.md-text-base.text-grey-dark.border.border-grey.px-5.pt-3.pb-2.rounded.leading-none.hover-text-grey-darker.hover-border-grey-dark.trans-color-fast Contact
-        //- nav.absolute.w-full.pin-l.pin-b.flex.items-center.px-8.md-px-16
-          ul.w-full.max-w-5xl.mx-auto.list-reset.tex-lg
-            li.inline-block.mr-8
-              a.cursor-pointer.hover-text-orange-dark.trans-color-fast CV
-            li.inline-block.mr-8
-              a.cursor-pointer.hover-text-orange-dark.trans-color-fast Contact
+                button-link(:href="'mailto:' + doc.contact") Contact
+      //- nav
       nav.sticky.pin-t.pin-l.w-screen.flex.items-center.px-8.md-px-16.min-h-32.py-6.bg-gradient-1.border-b.border-grey-light(v-if="doc.body")
         .w-full.max-w-5xl.mx-auto.pr-16.list-reset.text-sm.md-text-base.leading-none
           .-m-1
             a.inline-block.p-2.md-mr-2.cursor-pointer(v-for="section in doc.body") {{$prismic.richTextAsPlain(section.primary.name)}}
-            //- a.inline-block.p-2.md-mr-2.cursor-pointer.opacity-33 Contact
             a.inline-block.p-2.md-mr-2.cursor-pointer.opacity-33 CV
+      //- articles
       section(v-if="doc.body")
         section(v-for="(section, i) in doc.body", :key="i", v-if="section.items.length > 0")
           h2.border-b.border-grey-light.px-8.md-px-16.text-base.md-text-md.flex.items-center.justify-center(v-if="i > -1", style="height:14em")
@@ -33,11 +30,7 @@
               header.max-w-5xl.mx-auto.py-12.pr-20.leading-tight
                 h2.text-xl.md-text-2xl.mb-2
                   prismic-rich-text(:field="item.article.data.title")
-                h6.inline-block.text-xs.md-text-sm.mr-4
-                  template(v-if="item.article.data.publisher")
-                    <i>{{item.article.data.publisher}}</i><span class="inline-block mx-4">&middot;</span>
-                  template(v-if="item.article.data.date__year")
-                    span(class="small-caps") {{item.article.data.date__season}} {{item.article.data.date__year}}
+                article-details.text-xs.md-text-sm.mr-4(:publisher="item.article.data.publisher", :season="item.article.data.date__season", :year="item.article.data.date__year")
       footer(style="height:66vh;min-height:414px")
         section.max-w-5xl.mx-auto
     //- scrim
@@ -46,8 +39,11 @@
 </template>
 
 <script>
+import ArticleDetails from '@/components/Article__Details'
+import ButtonLink from '@/components/ButtonLink'
 export default {
   name: 'home',
+  components: { ArticleDetails, ButtonLink },
   data () {
     return {
       doc: {}

@@ -16,4 +16,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   font-size:16px;
 }
+
+.fade-enter-active{transition:opacity 500ms;}
+.fade-enter{opacity:0;}
 </style>

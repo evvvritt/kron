@@ -77,7 +77,8 @@
       background:linear-gradient(to right, #fcfbf8 85%, #b8c2cc);
     }
   }
- .trans-all-slow{transition:all 1000ms;}
+ .trans-opacity-slow{transition:opacity 1000ms;}
+ .trans-opacity-fast{transition: opacity 500ms}
  .trans-color-fast{transition:color 500ms, border-color 500ms;}
  .small-caps{font-size:0.72em;text-transform: uppercase; letter-spacing:0.02em;}
  .translY-25pct{transform:translateY(25%);}

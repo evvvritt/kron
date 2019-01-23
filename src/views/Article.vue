@@ -27,6 +27,18 @@ export default {
       doc: null
     }
   },
+  head: {
+    title: function () {
+      return this.doc && { inner: this.$prismic.richTextAsPlain(this.doc.title) }
+    },
+    meta: function () {
+      return this.doc && [{
+        name: 'description',
+        content: this.$prismic.richTextAsPlain(this.doc.meta_description),
+        id: 'meta-desc'
+      }]
+    }
+  },
   computed: {
     btnLabel () {
       const type = this.doc.external_source.link_type
@@ -37,7 +49,7 @@ export default {
     doNothing () {},
     getDoc (uid) {
       if (!uid) return console.error('Missing parameter: uid')
-      this.$prismic.client.getByUID('article', uid).then(doc => { this.doc = doc.data })
+      this.$prismic.client.getByUID('article', uid).then(doc => { this.doc = doc.data; this.$emit('updateHead') })
     }
   },
   created () {

@@ -4,10 +4,12 @@ import router from './router'
 import PrismicVue from 'prismic-vue'
 import linkResolver from './prismic-link-resolver'
 import VueScrollTo from 'vue-scrollto'
+import VueHead from 'vue-head'
 
-Vue.config.productionTip = false
+Vue.config.meta = { title: 'Cat Kron' }
 
-Vue.use(VueScrollTo)
+Vue.use(VueScrollTo, { complement: Vue.config.meta.title })
+Vue.use(VueHead)
 Vue.use(PrismicVue, {
   endpoint: window.prismic.endpoint,
   linkResolver

@@ -16,10 +16,10 @@
                 a(:href="'mailto:' + doc.contact", target="_blank", rel="nofollow")
                   btn Contact
       //- nav
-      nav.sticky.pin-t.pin-l.w-screen.flex.items-center.px-8.md-px-16.min-h-32.py-6.bg-gradient-1.border-b.border-grey-light.trans-all-slow(v-if="doc.body", ref="nav", :class="{'opacity-0': loading}")
+      nav.sticky.pin-t.pin-l.w-screen.flex.items-center.px-8.md-px-16.min-h-32.py-6.bg-gradient-1.border-b.border-grey-light.trans-opacity-slow(v-if="doc.body", ref="nav", :class="{'opacity-0': loading}")
         .w-full.max-w-5xl.mx-auto.pr-16.list-reset.text-sm.md-text-base.leading-none
           .-m-1
-            a.inline-block.p-2.md-mr-2.cursor-pointer(v-for="(section, i) in doc.body", @click="jumpTo(section.primary.name)", v-if="section.items.length > 0", :class="{'opacity-25': activeWaypoint > -1 && activeWaypoint !== i}") {{$prismic.richTextAsPlain(section.primary.name)}}
+            a.inline-block.p-2.md-mr-2.cursor-pointer.trans-opacity-fast(v-for="(section, i) in doc.body", @click="jumpTo(section.primary.name)", v-if="section.items.length > 0", :class="{'opacity-25': activeWaypoint > -1 && activeWaypoint !== i}") {{$prismic.richTextAsPlain(section.primary.name)}}
             .inline-block.p-2.md-mr-2.cursor-pointer.opacity-33
               cv-link(:linkObj="doc.cv_link") CV
       //- articles
@@ -68,6 +68,12 @@ export default {
       activeWaypoint: -1
     }
   },
+  head: {
+    meta: function () {
+      const desc = this.doc.site_description
+      return desc && [{ name: 'description', content: this.$prismic.richTextAsPlain(desc), id: 'meta-desc' }]
+    }
+  },
   methods: {
     kebab (field) {
       return _kebab(this.$prismic.richTextAsPlain(field))
@@ -100,11 +106,17 @@ export default {
     }, 100),
     getHome () {
       const fetchlinks = ['article.title', 'article.publisher', 'article.date__season', 'article.date__year']
-      return this.$prismic.client.getSingle('home', { fetchLinks: fetchlinks }).then(resp => { this.doc = resp.data })
+      return this.$prismic.client.getSingle('home', { fetchLinks: fetchlinks })
+        .then(resp => {
+          this.doc = resp.data
+          this.$emit('updateHead')
+        })
     }
   },
   created () {
-    this.getHome().then(setTimeout(() => { this.loading = false }, 1000))
+    this.getHome().then(() => {
+      setTimeout(() => { this.loading = false }, 1000)
+    })
   },
   updated () {
     this.getNavHt()

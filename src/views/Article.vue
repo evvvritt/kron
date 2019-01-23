@@ -1,7 +1,7 @@
 <template lang="pug">
-  article.fixed.pin.w-full.h-screen.overflow-y-scroll.z-10.cursor-pointer(@click="$emit('close')")
+  article.article.fixed.pin.w-full.h-screen.overflow-y-scroll.z-10.cursor-pointer(@click="$emit('close')")
     //- "page" body
-    .min-h-screen.relative.z-20.shadow.bg-gradient-1.cursor-default(style="width:95%;margin-left:5%;", @click.stop="doNothing")
+    .article__body.md-w-95pct.md-ml-5pct.min-h-screen.relative.z-20.shadow.bg-gradient-1.cursor-default(@click.stop="doNothing")
       //- text body
       transition(name="fade")
         .max-w-5xl.mx-auto.py-25vmin.pl-10.pr-16.sm-pl-20.md-pl-24.md-pr-44.xl-pl-16(v-if="doc")
@@ -49,5 +49,17 @@ export default {
 <style scoped>
 section >>> p + p{
   text-indent:2.4em;
+}
+
+@media print {
+  .article{
+    position:static;
+    height:auto;
+  }
+  .article__body{
+    margin-left:0;
+    width:100%;
+    background:white;
+  }
 }
 </style>

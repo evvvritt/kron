@@ -1,8 +1,8 @@
 <template lang="pug">
-  article.relative
+  article.home.relative(:data-route="$route.name")
     transition(name="article")
       router-view(@close="$router.push({name: 'home'})")
-    .relative(:style="{transition: 'transform 800ms', transform: $route.name === 'article' ? 'translateX(-5%)' : ''}")
+    .home__main.relative(:style="{transition: 'transform 800ms', transform: $route.name === 'article' ? 'translateX(-5%)' : ''}")
       //- intro
       section#home__intro.relative.w-full.flex.items-center.px-8.md-px-16.py-32
         .w-full.max-w-5xl.mx-auto.pr-20.md-pr-36
@@ -46,7 +46,7 @@
           span.font-sans.inline-block.py-10(v-show="showCredits") Site by <a class="underline" href="http://everettwilliams.info" target="_blank" rel="nofollow">Everett Williams</a>
     //- scrim
     transition(name="scrim")
-      .absolute.pin.bg-black.opacity-50(v-show="$route.name !== 'home'")
+      .home__scrim.absolute.pin.bg-black.opacity-50(v-show="$route.name !== 'home'")
 </template>
 
 <script>
@@ -136,6 +136,14 @@ export default {
   min-height:72vh;
   @media (--bkpt-md) {
     min-height: calc(100vh - 8rem)
+  }
+}
+
+@media print {
+  .bg-gradient-1{background:white;}
+  [data-route="article"] .home__main,
+  .home__scrim{
+    display: none
   }
 }
 </style>

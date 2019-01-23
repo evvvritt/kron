@@ -11,9 +11,7 @@
 <script>
 export default {
   name: 'CVLink',
-  props: {
-    linkObj: { type: Object, required: true }
-  }
+  props: ['linkObj']
 }
 </script>
 

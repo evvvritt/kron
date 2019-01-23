@@ -16,16 +16,16 @@
                 a(:href="'mailto:' + doc.contact", target="_blank", rel="nofollow")
                   btn Contact
       //- nav
-      nav.sticky.pin-t.pin-l.w-screen.flex.items-center.px-8.md-px-16.min-h-32.py-6.bg-gradient-1.border-b.border-grey-light(v-if="doc.body")
+      nav.sticky.pin-t.pin-l.w-screen.flex.items-center.px-8.md-px-16.min-h-32.py-6.bg-gradient-1.border-b.border-grey-light(v-if="doc.body", ref="nav")
         .w-full.max-w-5xl.mx-auto.pr-16.list-reset.text-sm.md-text-base.leading-none
           .-m-1
-            a.inline-block.p-2.md-mr-2.cursor-pointer(v-for="section in doc.body") {{$prismic.richTextAsPlain(section.primary.name)}}
+            a.inline-block.p-2.md-mr-2.cursor-pointer(v-for="section in doc.body", @click="jumpTo(section.primary.name)", v-if="section.items.length > 0") {{$prismic.richTextAsPlain(section.primary.name)}}
             .inline-block.p-2.md-mr-2.cursor-pointer.opacity-33
               cv-link(:linkObj="doc.cv_link") CV
       //- articles
       section(v-if="doc.body")
         //- category
-        section(v-for="(section, i) in doc.body", :key="i", v-if="section.items.length > 0")
+        section(v-for="(section, i) in doc.body", :key="i", v-if="section.items.length > 0", :id="'home__section--' + kebab(section.primary.name)")
           //- cat title
           h2.border-b.border-grey-light.px-8.md-px-16.text-base.md-text-md.flex.items-center.justify-center(v-if="i > -1", style="height:14em")
             span.block.py-16.w-full.max-w-5xl.mx-auto.small-caps(style="letter-spacing:0.2em") {{$prismic.richTextAsPlain(section.primary.name)}}
@@ -53,6 +53,7 @@
 import ArticleDetails from '@/components/Article__Details'
 import Btn from '@/components/Button'
 import cvLink from '@/components/CVLink'
+import _kebab from 'lodash/kebabCase'
 export default {
   name: 'home',
   components: { ArticleDetails, Btn, cvLink },
@@ -63,6 +64,14 @@ export default {
     }
   },
   methods: {
+    kebab (field) {
+      return _kebab(this.$prismic.richTextAsPlain(field))
+    },
+    jumpTo (name) {
+      const el = '#home__section--' + this.kebab(name)
+      const offset = this.$refs.nav.offsetHeight
+      return this.$scrollTo(el, 500, { offset: -offset })
+    },
     getHome () {
       const fetchlinks = ['article.title', 'article.publisher', 'article.date__season', 'article.date__year']
       this.$prismic.client.getSingle('home', { fetchLinks: fetchlinks }).then(resp => { this.doc = resp.data })

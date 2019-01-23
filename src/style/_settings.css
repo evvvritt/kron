@@ -4,5 +4,6 @@
 @custom-media --bkpt-xl (min-width: 1280px);
 
 :root{
-  
+  --duration-slow:1000ms;
+  --duration-fast:500ms;
 }

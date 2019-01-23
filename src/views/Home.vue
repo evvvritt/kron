@@ -19,13 +19,13 @@
       nav.sticky.pin-t.pin-l.w-screen.flex.items-center.px-8.md-px-16.min-h-32.py-6.bg-gradient-1.border-b.border-grey-light(v-if="doc.body", ref="nav")
         .w-full.max-w-5xl.mx-auto.pr-16.list-reset.text-sm.md-text-base.leading-none
           .-m-1
-            a.inline-block.p-2.md-mr-2.cursor-pointer(v-for="section in doc.body", @click="jumpTo(section.primary.name)", v-if="section.items.length > 0") {{$prismic.richTextAsPlain(section.primary.name)}}
+            a.inline-block.p-2.md-mr-2.cursor-pointer(v-for="(section, i) in doc.body", @click="jumpTo(section.primary.name)", v-if="section.items.length > 0", :class="{'opacity-25': activeWaypoint > -1 && activeWaypoint !== i}") {{$prismic.richTextAsPlain(section.primary.name)}}
             .inline-block.p-2.md-mr-2.cursor-pointer.opacity-33
               cv-link(:linkObj="doc.cv_link") CV
       //- articles
       section(v-if="doc.body")
         //- category
-        section(v-for="(section, i) in doc.body", :key="i", v-if="section.items.length > 0", :id="'home__section--' + kebab(section.primary.name)")
+        section(v-for="(section, i) in doc.body", :key="i", v-if="section.items.length > 0", :id="'home__section--' + kebab(section.primary.name)", ref="section")
           //- cat title
           h2.border-b.border-grey-light.px-8.md-px-16.text-base.md-text-md.flex.items-center.justify-center(v-if="i > -1", style="height:14em")
             span.block.py-16.w-full.max-w-5xl.mx-auto.small-caps(style="letter-spacing:0.2em") {{$prismic.richTextAsPlain(section.primary.name)}}
@@ -43,7 +43,7 @@
       small.block.px-8.md-px-16.text-grey.text-xs
         .max-w-5xl.mx-auto.small-caps
           span.font-sans.inline-block.py-10.cursor-pointer(v-show="!showCredits", @click="showCredits = true") Credits
-          span.font-sans.inline-block.py-10(v-show="showCredits") Site by <a href="http://everettwilliams.info" target="_blank" rel="nofollow">Everett Williams</a>
+          span.font-sans.inline-block.py-10(v-show="showCredits") Site by <a class="underline" href="http://everettwilliams.info" target="_blank" rel="nofollow">Everett Williams</a>
     //- scrim
     transition(name="scrim")
       .absolute.pin.bg-black.opacity-50(v-show="$route.name !== 'home'")
@@ -54,24 +54,49 @@ import ArticleDetails from '@/components/Article__Details'
 import Btn from '@/components/Button'
 import cvLink from '@/components/CVLink'
 import _kebab from 'lodash/kebabCase'
+import _throttle from 'lodash/throttle'
 export default {
   name: 'home',
   components: { ArticleDetails, Btn, cvLink },
   data () {
     return {
       doc: {},
-      showCredits: false
+      navHt: 0,
+      showCredits: false,
+      waypoints: [],
+      activeWaypoint: -1
     }
   },
   methods: {
     kebab (field) {
       return _kebab(this.$prismic.richTextAsPlain(field))
     },
+    getNavHt () {
+      const el = this.$refs.nav
+      if (!el) return 0
+      this.navHt = el.offsetHeight
+      return this.navHt
+    },
+    getWaypoints () {
+      const pts = []
+      const body = document.body.getBoundingClientRect()
+      this.$refs.section.forEach(sec => {
+        const box = sec.getBoundingClientRect()
+        pts.push(box.top - body.top)
+      })
+      this.waypoints = pts
+    },
     jumpTo (name) {
+      const offset = this.getNavHt()
       const el = '#home__section--' + this.kebab(name)
-      const offset = this.$refs.nav.offsetHeight
       return this.$scrollTo(el, 500, { offset: -offset })
     },
+    onScroll: _throttle(function () {
+      const y = window.pageYOffset + this.navHt + 50
+      let index = -1
+      this.waypoints.forEach((pt, i) => { if (y >= pt) index = i })
+      this.activeWaypoint = index
+    }, 100),
     getHome () {
       const fetchlinks = ['article.title', 'article.publisher', 'article.date__season', 'article.date__year']
       this.$prismic.client.getSingle('home', { fetchLinks: fetchlinks }).then(resp => { this.doc = resp.data })
@@ -79,6 +104,16 @@ export default {
   },
   created () {
     this.getHome()
+  },
+  updated () {
+    this.getNavHt()
+    this.getWaypoints()
+  },
+  mounted () {
+    window.addEventListener('scroll', this.onScroll)
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.onScroll)
   }
 }
 </script>

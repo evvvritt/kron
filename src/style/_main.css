@@ -77,8 +77,8 @@
       background:linear-gradient(to right, #fcfbf8 85%, #b8c2cc);
     }
   }
-  .trans-all-slow{transition:all var(--duration-fast)}
-  .trans-opacity-slow{transition:opacity var(--duration-fast)}
+  .trans-all-slow{transition:all var(--duration-slow)}
+  .trans-opacity-slow{transition:opacity var(--duration-slow)}
   .trans-opacity-fast{transition: opacity var(--duration-fast)}
   .trans-color-fast{transition:color var(--duration-fast), border-color var(--duration-fast);}
   .small-caps{font-size:0.72em;text-transform: uppercase; letter-spacing:0.02em;}

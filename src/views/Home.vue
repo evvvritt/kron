@@ -13,26 +13,37 @@
               prismic-rich-text.text-lg.sm-text-xl.md-text-2xl.leading-tight.text-grey-darkest(:field="doc.about", style="max-width:30em")
               //- contact btn
               .absolute.pin-l.top-100.mt-12
-                button-link(:href="'mailto:' + doc.contact") Contact
+                a(:href="'mailto:' + doc.contact", target="_blank", rel="nofollow")
+                  btn Contact
       //- nav
       nav.sticky.pin-t.pin-l.w-screen.flex.items-center.px-8.md-px-16.min-h-32.py-6.bg-gradient-1.border-b.border-grey-light(v-if="doc.body")
         .w-full.max-w-5xl.mx-auto.pr-16.list-reset.text-sm.md-text-base.leading-none
           .-m-1
             a.inline-block.p-2.md-mr-2.cursor-pointer(v-for="section in doc.body") {{$prismic.richTextAsPlain(section.primary.name)}}
-            a.inline-block.p-2.md-mr-2.cursor-pointer.opacity-33 CV
+            .inline-block.p-2.md-mr-2.cursor-pointer.opacity-33
+              cv-link(:linkObj="doc.cv_link") CV
       //- articles
       section(v-if="doc.body")
+        //- category
         section(v-for="(section, i) in doc.body", :key="i", v-if="section.items.length > 0")
+          //- cat title
           h2.border-b.border-grey-light.px-8.md-px-16.text-base.md-text-md.flex.items-center.justify-center(v-if="i > -1", style="height:14em")
             span.block.py-16.w-full.max-w-5xl.mx-auto.small-caps(style="letter-spacing:0.2em") {{$prismic.richTextAsPlain(section.primary.name)}}
+          //- article loop
           article.border-b.border-grey-light.px-8.md-px-16(v-for="(item, ii) in section.items", :key="ii", v-if="item.article && item.article.uid")
             router-link(:to="{name: 'article', params: {uid: item.article.uid}}")
               header.max-w-5xl.mx-auto.py-12.pr-20.leading-tight
                 h2.text-xl.md-text-2xl.mb-2
                   prismic-rich-text(:field="item.article.data.title")
                 article-details.text-xs.md-text-sm.mr-4(:publisher="item.article.data.publisher", :season="item.article.data.date__season", :year="item.article.data.date__year")
-      footer(style="height:66vh;min-height:414px")
-        section.max-w-5xl.mx-auto
+      footer(style="height:61.8vh;min-height:414px").relative.flex.items-center.justify-center.px-8.md-px-16
+        section.w-full.max-w-5xl.mx-auto.pb-20
+          cv-link.text-lg(:linkObj="doc.cv_link")
+            btn.px-8 CV
+      small.block.px-8.md-px-16.text-grey.text-xs
+        .max-w-5xl.mx-auto.small-caps
+          span.font-sans.inline-block.py-10.cursor-pointer(v-show="!showCredits", @click="showCredits = true") Credits
+          span.font-sans.inline-block.py-10(v-show="showCredits") Site by <a href="http://everettwilliams.info" target="_blank" rel="nofollow">Everett Williams</a>
     //- scrim
     transition(name="scrim")
       .absolute.pin.bg-black.opacity-50(v-show="$route.name !== 'home'")
@@ -40,13 +51,15 @@
 
 <script>
 import ArticleDetails from '@/components/Article__Details'
-import ButtonLink from '@/components/ButtonLink'
+import Btn from '@/components/Button'
+import cvLink from '@/components/CVLink'
 export default {
   name: 'home',
-  components: { ArticleDetails, ButtonLink },
+  components: { ArticleDetails, Btn, cvLink },
   data () {
     return {
-      doc: {}
+      doc: {},
+      showCredits: false
     }
   },
   methods: {

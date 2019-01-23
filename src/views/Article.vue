@@ -9,18 +9,19 @@
             prismic-rich-text.text-2xl.md-text-4xl.leading-tight.mb-6(:field="doc.title")
             article-details.text-sm.md-text-base(:publisher="doc.publisher", :season="doc.date__season", :year="doc.date__year")
             nav.mt-16(v-if="doc.external_source.url")
-              button-link(:href="doc.external_source.url") {{btnLabel}}
+              a(:href="doc.external_source.url", target="_blank", rel="nofollow")
+                btn {{btnLabel}}
           section.md-text-xl.md-ml-20.lg-ml-32.xl-ml-36.leading-normal(style="max-width:30em")
             prismic-rich-text(:field="doc.body")
 </template>
 
 <script>
 import ArticleDetails from '@/components/Article__Details'
-import ButtonLink from '@/components/ButtonLink'
+import Btn from '@/components/Button'
 export default {
   name: 'Article',
   props: ['uid'],
-  components: { ArticleDetails, ButtonLink },
+  components: { ArticleDetails, Btn },
   data () {
     return {
       doc: null

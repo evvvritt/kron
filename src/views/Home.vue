@@ -8,15 +8,15 @@
         .w-full.max-w-5xl.mx-auto.pr-20.md-pr-36
           h1.style-hide Cat Kron
           .md-pb-15vh(v-if="doc.about")
-            .relative
+            .relative.trans-all-slow(:class="{'opacity-0 translY-25pct': loading}")
               //- about
-              prismic-rich-text.text-lg.sm-text-xl.md-text-2xl.leading-tight.text-grey-darkest(:field="doc.about", style="max-width:30em")
+              prismic-rich-text.text-lg.sm-text-xl.md-text-2xl.leading-tight.text-grey-darkest(:field="doc.about", style="max-width:30em;")
               //- contact btn
-              .absolute.pin-l.top-100.mt-12
+              .absolute.pin-l.top-100.mt-12(style="transition: all 1000ms 500ms", :class="{'opacity-0': loading}")
                 a(:href="'mailto:' + doc.contact", target="_blank", rel="nofollow")
                   btn Contact
       //- nav
-      nav.sticky.pin-t.pin-l.w-screen.flex.items-center.px-8.md-px-16.min-h-32.py-6.bg-gradient-1.border-b.border-grey-light(v-if="doc.body", ref="nav")
+      nav.sticky.pin-t.pin-l.w-screen.flex.items-center.px-8.md-px-16.min-h-32.py-6.bg-gradient-1.border-b.border-grey-light.trans-all-slow(v-if="doc.body", ref="nav", :class="{'opacity-0': loading}")
         .w-full.max-w-5xl.mx-auto.pr-16.list-reset.text-sm.md-text-base.leading-none
           .-m-1
             a.inline-block.p-2.md-mr-2.cursor-pointer(v-for="(section, i) in doc.body", @click="jumpTo(section.primary.name)", v-if="section.items.length > 0", :class="{'opacity-25': activeWaypoint > -1 && activeWaypoint !== i}") {{$prismic.richTextAsPlain(section.primary.name)}}
@@ -61,6 +61,7 @@ export default {
   data () {
     return {
       doc: {},
+      loading: true,
       navHt: 0,
       showCredits: false,
       waypoints: [],
@@ -99,11 +100,11 @@ export default {
     }, 100),
     getHome () {
       const fetchlinks = ['article.title', 'article.publisher', 'article.date__season', 'article.date__year']
-      this.$prismic.client.getSingle('home', { fetchLinks: fetchlinks }).then(resp => { this.doc = resp.data })
+      return this.$prismic.client.getSingle('home', { fetchLinks: fetchlinks }).then(resp => { this.doc = resp.data })
     }
   },
   created () {
-    this.getHome()
+    this.getHome().then(setTimeout(() => { this.loading = false }, 1000))
   },
   updated () {
     this.getNavHt()

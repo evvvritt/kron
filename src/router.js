@@ -24,6 +24,12 @@ export default new Router({
     {
       path: '/articles',
       redirect: '/'
+    },
+    {
+      path: '/login',
+      beforeEnter () {
+        window.location = 'https://prismic.io/dashboard'
+      }
     }
   ]
 })
